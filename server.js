@@ -60,23 +60,25 @@ app.post('/api/', (req, res) => {
   });
 });
 
+// Update via ID
 app.put('/api/:id', (req, res) => {
-  let updateEmpl = {name: req.body.name, age: req.body.age};
-})
+  let sql = `UPDATE empl SET name = '${req.body.name}', age = '${req.body.age}' WHERE id = ${req.params.id}`;
+  let query = db.query(sql, (err, result) => {
+    if(err) throw err;
+    console.log(sql);
+    res.send("Updated employee id: " + req.params.id);
+  });
+});
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+// DELETE via ID
+app.delete('/api/:id', (req, res) => {
+  let sql = `DELETE FROM empl WHERE id = ${req.params.id}`;
+  let query = db.query(sql, (err, result) => {
+    if(err) throw err;
+    console.log(sql);
+    res.send("Updated employee id: " + req.params.id);
+  });
+});
 
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
